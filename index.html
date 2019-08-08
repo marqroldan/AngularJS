@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="calculatorApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Calculator</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
+    <main ng-controller="calculatorController">
+        <section class="inputArea section">
+            <div class="section__container">
+                <div class="pageSwitcher">
+                    <label>
+                    <input type="checkbox" />
+                    <span class="pageSwitcher__optionText">Calculator</span>
+                    <span class="pageSwitcher__optionText">History</span>
+                    </label>
+                </div>
+                <input class="inputArea__input" value='{{mathString}}' placeholder='0'/>
+            </div>
+        </section>
+        <section class="buttonsArea section">
+            <div class="section__container">
+                <div class="buttonsArea__container">
+                    <div ng-repeat="obj in _buttons" class="buttonsArea__button" ng-click="buttonClick(obj)" data-value='{{obj.value}}'>{{obj.value}}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
     <script src="js/angular.min.js"></script>
     <script src="js/app.js"></script>
 </body>
