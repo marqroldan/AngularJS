@@ -9,30 +9,36 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
-    <main ng-controller="calculatorController">
-        <section class="inputArea section">
+    <main class="main" ng-controller="calculatorController">
+        <section class="section topbar">
             <div class="section__container">
                 <div class="pageSwitcher">
-                    <label>
-                    <input type="checkbox" />
-                    <span class="pageSwitcher__optionText">Calculator</span>
-                    <span class="pageSwitcher__optionText">History</span>
-                    </label>
-                </div>
-                <input class="inputArea__input" value='{{mathString}}' placeholder='0'/>
+                        <label class="pageSwitcher__label">
+                        <input type="checkbox" class="pageSwitcher__checkbox" ng-click="showType = !showType"/>
+                        <span class="pageSwitcher__background"></span>
+                        <span class="pageSwitcher__option">Calculator</span>
+                        <span class="pageSwitcher__option">History</span>
+                        </label>
+                    </div>
             </div>
         </section>
-        <section class="buttonsArea section">
+        <section class="inputArea section" ng-class="{false: '', true: 'history'}[showType]">
             <div class="section__container">
-                <div class="buttonsArea__container">
-                    <div ng-repeat="obj in _buttons" class="buttonsArea__button" ng-click="buttonClick(obj)" data-value='{{obj.value}}'>{{obj.value}}</div>
+                <div ng-cloak ng-switch="showType">
+                    <div ng-switch-when="false" class="inputArea__valueContainer sectionShow" ng-cloak ng-model="mathString"><div class="inputArea__value">{{mathString}}</div></div>
+                    <div ng-switch-when="true" class="sectionShow inputArea__historyContainer">Hiii</div>
                 </div>
+            </div>
+        </section>
+        <section class="buttonArea" ng-class="{false: '', true: 'buttonArea--out'}[showType]">
+            <div class="section__container">
+                <div class="buttonArea__container">
+                    <button ng-cloak ng-repeat="obj in _buttons" class="button {{obj.class}}" ng-click="buttonClick(obj)">{{obj.value}}</button>
             </div>
         </section>
     </main>
-
-
     <script src="js/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.8/angular-animate.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

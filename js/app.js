@@ -1,22 +1,34 @@
-var calculatorApp = angular.module('calculatorApp', []);
+var calculatorApp = angular.module('calculatorApp', ['ngAnimate']);
 
 calculatorApp.controller('calculatorController', function ($scope) {
-    let errorString = 'Error.';
-    $scope.mathString = '';
-    
-
-
+    const errorString = 'Error';
+    $scope.items = ['settings', 'home', 'options', 'other'];
+    $scope.showType = false;
+    $scope.mathString = 0;
     $scope._buttons = [
-        {value: '/'},
-        {value: '*',},
-        {value: '-',},
-        {value: '+',},
+        {
+            value: '/',
+            class: 'button--smaller',
+        },
+        {
+            value: '*',
+            class: 'button--smaller',
+        },
+        {
+            value: '-',
+            class: 'button--smaller',
+        },
+        {
+            value: '+',
+            class: 'button--smaller',
+        },
         {value: '9',},
         {value: '8',},
         {value: '7',},
         {
             value: 'DEL',
             type: 'operation',
+            class: 'button--smaller',
         },
         {value: '6',},
         {value: '5',},
@@ -24,6 +36,7 @@ calculatorApp.controller('calculatorController', function ($scope) {
         {
             value: 'CLC',
             type: 'operation',
+            class: 'button--smaller',
         },
         {value: '3',},
         {value: '2',},
@@ -46,7 +59,7 @@ calculatorApp.controller('calculatorController', function ($scope) {
                     $scope.mathString = $scope.mathString.substr(0, $scope.mathString.length-1)
                     break;
                 case 'CLC':
-                    $scope.mathString = '';
+                    $scope.mathString = '0';
                     break;
                 case '=':
                     try {
@@ -57,7 +70,7 @@ calculatorApp.controller('calculatorController', function ($scope) {
                     }
                     finally {
                         if(!$scope.mathString) {
-                            $scope.mathString = ''
+                            $scope.mathString = '0'
                             console.log("Empty eh", $scope.mathString)
                         }
                     }
@@ -66,6 +79,7 @@ calculatorApp.controller('calculatorController', function ($scope) {
             }
         }
         else {
+            if($scope.mathString=='0' && obj.value!='.') $scope.mathString = '';
             $scope.mathString += obj.value;
         }
     }
