@@ -26,7 +26,9 @@
             <div class="section__container">
                 <div ng-cloak ng-switch="showType">
                     <div ng-switch-when="false" class="inputArea__valueContainer sectionShow" ng-cloak ng-model="mathString"><div class="inputArea__value">{{mathString}}</div></div>
-                    <div ng-switch-when="true" class="sectionShow inputArea__historyContainer">Hiii</div>
+                    <div ng-switch-when="true" class="sectionShow inputArea__historyContainer">
+                        <div class="history__item" ng-repeat="history in histories">{{history}}</div>
+                    </div>
                 </div>
             </div>
         </section>

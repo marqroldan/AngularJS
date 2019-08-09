@@ -1,6 +1,21 @@
-var calculatorApp = angular.module('calculatorApp', ['ngAnimate']);
+var calculatorApp = angular.module('calculatorApp', []);
 
-calculatorApp.controller('calculatorController', function ($scope) {
+calculatorApp.controller('calculatorController', ['$scope', '$window', function ($scope, $window) {
+    if($window.localStorage.getItem('histories')==null) {
+        $window.localStorage.setItem('histories', JSON.stringify([]));
+    }
+    
+    //Try to parse
+    try {
+        $scope.histories = JSON.parse($window.localStorage.getItem('histories'));
+    }
+    catch(error) {
+        console.log(error);
+        //Reset the variable
+        $window.localStorage.setItem('histories', JSON.stringify({}));
+    }
+
+    console.log($scope.histories);
     const errorString = 'Error';
     $scope.items = ['settings', 'home', 'options', 'other'];
     $scope.showType = false;
@@ -56,23 +71,28 @@ calculatorApp.controller('calculatorController', function ($scope) {
         if(Object.keys(obj).includes('type') && obj.type=="operation") {
             switch (obj.value) {
                 case 'DEL':
-                    $scope.mathString = $scope.mathString.substr(0, $scope.mathString.length-1)
+                    if($scope.mathString!="0" || $scope.mathString!='') {
+                        //$scope.mathString = eval($scope.mathString);
+                        $scope.mathString = String($scope.mathString).substr(0, String($scope.mathString).length-1)
+                    }
                     break;
                 case 'CLC':
                     $scope.mathString = '0';
                     break;
                 case '=':
+                    let endValue = 0;
                     try {
-                        $scope.mathString = eval($scope.mathString);
+                        endValue = eval($scope.mathString);
                     } catch (error) {
-                        $scope.mathString = errorString
+                        endValue = errorString;
                         console.log(error);
                     }
                     finally {
-                        if(!$scope.mathString) {
-                            $scope.mathString = '0'
-                            console.log("Empty eh", $scope.mathString)
+                        if($scope.mathString!=errorString) {
+                            $scope.histories.push($scope.mathString);
+                            $window.localStorage.setItem('histories', JSON.stringify($scope.histories));
                         }
+                        $scope.mathString = endValue
                     }
                     break;
                 default:;
@@ -83,4 +103,4 @@ calculatorApp.controller('calculatorController', function ($scope) {
             $scope.mathString += obj.value;
         }
     }
-});
+}]);

@@ -1,5 +1,6 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     opacity: 0;
+    transition: all 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
   }
 
 html, body {
@@ -29,6 +30,7 @@ html, body {
     &__container {
         max-width: 960px;
         margin: 0 auto;
+        position: relative;
     }
     height: 100%;
     transition: all 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
@@ -118,17 +120,21 @@ html, body {
         box-shadow: inset 0 0 8px rgba(0,0,0,1);
         border: 1px solid rgba(6,178,255,0.3);
         border-radius: 50px;
-        padding: 5px 10px;
+        padding: 5px 0;
         height: 31px;
         outline: 0;
         position: relative;
         margin: 24px auto 24px auto;
         user-select: none;
-        cursor: pointer;
 
         label {
             display: flex;
             outline: 0;
+            height: 29px;
+            padding: 5px 10px;
+            width: 100%;
+            margin-top: -5px;
+            cursor: pointer;
         }
 
         &__option {
@@ -209,7 +215,7 @@ html, body {
         left: 0;
         right: 0;
         margin: 0 auto;
-        transition: all 0.3s linear;
+        transition: all 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 
         &--out {
             top: 100vh;
@@ -268,5 +274,12 @@ html, body {
         }
 
         border-radius: 0px;
+    }
+}
+
+@media (max-height: 775px) {
+    .main {
+        height: 775px !important;
+
     }
 }
