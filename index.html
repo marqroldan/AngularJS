@@ -14,7 +14,7 @@
             <div class="section__container">
                 <div class="pageSwitcher">
                         <label class="pageSwitcher__label">
-                        <input type="checkbox" class="pageSwitcher__checkbox" ng-click="showType = !showType"/>
+                        <input type="checkbox" class="pageSwitcher__checkbox" ng-model="showType" ng-click="checkboxClick()"/>
                         <span class="pageSwitcher__background"></span>
                         <span class="pageSwitcher__option">Calculator</span>
                         <span class="pageSwitcher__option">History</span>
@@ -27,7 +27,7 @@
                 <div ng-cloak ng-switch="showType">
                     <div ng-switch-when="false" class="inputArea__valueContainer sectionShow" ng-cloak ng-model="mathString"><div class="inputArea__value">{{mathString}}</div></div>
                     <div ng-switch-when="true" class="sectionShow inputArea__historyContainer">
-                        <div class="history__item" ng-repeat="history in histories">{{history}}</div>
+                        <div class="history__item" ng-repeat="history in histories" ng-click="historyRetrieve(history)">{{history}}</div>
                     </div>
                 </div>
             </div>
@@ -36,6 +36,7 @@
             <div class="section__container">
                 <div class="buttonArea__container">
                     <button ng-cloak ng-repeat="obj in _buttons" class="button {{obj.class}}" ng-click="buttonClick(obj)">{{obj.value}}</button>
+				</div>
             </div>
         </section>
     </main>
